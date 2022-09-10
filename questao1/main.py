@@ -2,12 +2,14 @@ from PIL import Image
 
 import functions
 
-# laplacianLena = functions.laplacian("./images/lena_gray.bmp", "lena_gray")
+lena_gray = Image.open('./images/lena_gray.bmp').convert('L')
 
-# unsharpMaskingLena = functions.unsharpMasking("./images/lena_gray.bmp", "lena_gray", 1)
+# laplacianLena = functions.laplacian(lena_gray, "lena_gray")
 
-# highBoostedLena = functions.unsharpMasking("./images/lena_gray.bmp", "lena_gray", 2)
+# unsharpMaskingLena = functions.unsharpMasking(lena_gray, "lena_gray", 1)
 
-# prewittLena = functions.prewittEdgeDetection("./images/lena_gray.bmp", "lena_gray")
+# highBoostedLena = functions.unsharpMasking(lena_gray, "lena_gray", 1.3)
 
-sobelLena = functions.sobelEdgeDetection("./images/lena_gray.bmp", "lena_gray")
+prewittLena = functions.prewittEdgeDetection(lena_gray, "lena_gray")
+
+sobelLena = functions.sobelEdgeDetection(lena_gray, "lena_gray")

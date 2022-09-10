@@ -8,8 +8,8 @@ def dilation(img, kernel, pixelInterest = (1, 1)):
 
   imageWithDilation = Image.new(img.mode, img.size)
 
-  for line in range(1, width-1):
-    for column in range(1, height-1):
+  for line in range(xInterest, width-xInterest):
+    for column in range(yInterest, height-yInterest):
       if img.getpixel((line, column)) == 255:
         for kernelLine in range(len(kernel)):
           for kernelColumn in range(len(kernel[kernelLine])):
@@ -18,15 +18,15 @@ def dilation(img, kernel, pixelInterest = (1, 1)):
 
   return imageWithDilation
 
-def erosion(img, kernel, pixelInterest):
+def erosion(img, kernel, pixelInterest = (1, 1)):
   img = img.convert('L')
   width, height = img.size
   xInterest, yInterest = pixelInterest
 
   imageWithErosion = Image.new(img.mode, img.size)
 
-  for line in range(1, width-1):
-    for column in range(1, height-1):
+  for line in range(xInterest, width-xInterest):
+    for column in range(yInterest, height-yInterest):
       if img.getpixel((line, column)) == 255:
         match = True
         for kernelLine in range(len(kernel)):
@@ -41,10 +41,10 @@ def erosion(img, kernel, pixelInterest):
 
   return imageWithErosion
 
-def opening(img, kernel, pixelInterest):
+def opening(img, kernel, pixelInterest = (1, 1)):
   imageAfterOpening = dilation(erosion(img, kernel, pixelInterest), kernel, pixelInterest)
   return imageAfterOpening
 
-def closing(img, kernel, pixelInterest):
+def closing(img, kernel, pixelInterest = (1, 1)):
   imageAfterClosing = erosion(dilation(img, kernel, pixelInterest), kernel, pixelInterest)
   return imageAfterClosing

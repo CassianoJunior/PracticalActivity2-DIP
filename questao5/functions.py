@@ -10,6 +10,68 @@ from questao3 import functions as setsFunctions
 from questao4 import functions as morphologicalFunctions
 
 
+def binarizeImage(img, colorObject, isGrayScale = False):
+  width, height = img.size
+
+  imageBinarized = Image.new('L', img.size, 0)
+
+  if isGrayScale:
+    for line in range(width):
+      for column in range(height):
+        if img.getpixel((line, column)) == colorObject:
+          imageBinarized.putpixel((line, column), 255)
+  else:
+    for line in range(width):
+      for column in range(height):
+        colorObjectR, colorObjectG, colorObjectB = colorObject
+        r, g, b = img.getpixel((line, column))
+        if r == colorObjectR and g == colorObjectG and b == colorObjectB:
+          imageBinarized.putpixel((line, column), 255)
+
+  return imageBinarized
+
+def colorObject(img, color, background):
+  width, height = img.size
+
+  imageColored = Image.new('RGB', img.size)
+
+  for line in range(width):
+    for column in range(height):
+      if img.getpixel((line, column)) == 255:
+        imageColored.putpixel((line, column), color)
+      else:
+        imageColored.putpixel((line, column), background)
+
+  return imageColored
+
+
+def sumImages(image1, image2):
+  width, height = image1.size
+
+  imageSum = Image.new(image1.mode, image1.size)
+
+  if image2.mode == 'L': image2 = image2.convert('RGB')
+
+  if image1.mode == 'RGB':
+    for line in range(width):
+      for column in range(height):
+        r, g, b = image1.getpixel((line, column))
+        r2, g2, b2 = image2.getpixel((line, column))
+        imageSum.putpixel((line, column), (r + r2, g + g2, b + b2))
+
+  elif image1.mode == 'RGBA':
+    for line in range(width):
+      for column in range(height):
+        r, g, b, a = image1.getpixel((line, column))
+        r2, g2, b2, a2 = image2.getpixel((line, column))
+        imageSum.putpixel((line, column), (r + r2, g + g2, b + b2, a + a2))
+  else:
+    for line in range(width):
+      for column in range(height):
+        imageSum.putpixel((line, column), image1.getpixel((line, column)) + image2.getpixel((line, column)))
+
+  return imageSum
+
 def complement(img):
   img = img.convert('L')
   width, height = img.size

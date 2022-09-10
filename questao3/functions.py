@@ -8,8 +8,11 @@ def union(image1, image2):
 
   for line in range(width):
     for column in range(height):
-      value = image1.getpixel((line, column)) or image2.getpixel((line, column))
-      unionImage.putpixel((line, column), value)
+      if image1.getpixel((line, column)) or image2.getpixel((line, column)):
+        if image1.getpixel((line, column)):
+          unionImage.putpixel((line, column), image1.getpixel((line, column)))
+        else:
+          unionImage.putpixel((line, column), image2.getpixel((line, column)))
 
   return unionImage
 
