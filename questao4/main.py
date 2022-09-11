@@ -3,18 +3,18 @@ from PIL import Image
 import functions
 
 kernelDilation = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
-imageToDilation = Image.open("./images/dilation.png")
-imageWithDilation = functions.dilation(imageToDilation, kernelDilation, (1, 1))
-# imageWithDilation.show()
+image = Image.open("./images/erosion.png")
+imageWithDilation = functions.dilation(image, kernelDilation, (1, 1))
+imageWithDilation.save('./images/imageDilated.png')
 
-imageToErosion = Image.open("./images/erosion.png")
 kernelErosion = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
-imageWithErosion = functions.erosion(imageToErosion, kernelErosion, (1, 1))
+imageWithErosion = functions.erosion(image, kernelErosion, (1, 1))
 # imageWithErosion.show()
 
+imageWithErosion.save('./images/imageEroded.png')
 
-imageOpening = functions.opening(imageToErosion, kernelErosion, (1, 1))
+imageOpening = functions.opening(image, kernelErosion, (1, 1))
 # imageOpening.show()
 
-imageClosing = functions.closing(imageToDilation, kernelErosion, (1, 1))
+imageClosing = functions.closing(image, kernelErosion, (1, 1))
 # imageClosing.show()

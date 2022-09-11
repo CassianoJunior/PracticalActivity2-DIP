@@ -16,7 +16,7 @@ def union(image1, image2):
 
   return unionImage
 
-def intersect(image1, image2):
+def intersection(image1, image2):
   width, height = image1.size
 
   intersectImage = Image.new(image1.mode, image1.size)
@@ -29,13 +29,16 @@ def intersect(image1, image2):
   return intersectImage
 
 def difference(image1, image2):
-  width, height = image1.size
+  return intersection(image1, complement(image2))
 
-  differenceImage = Image.new(image1.mode, image1.size)
+def complement(img):
+  img = img.convert('L')
+  width, height = img.size
+
+  imageComplement = Image.new(img.mode, img.size)
 
   for line in range(width):
     for column in range(height):
-      value = image1.getpixel((line, column)) - image2.getpixel((line, column))
-      differenceImage.putpixel((line, column), abs(value))
+      imageComplement.putpixel((line, column), 255 - img.getpixel((line, column)))
 
-  return differenceImage
+  return imageComplement
